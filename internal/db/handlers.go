@@ -7,6 +7,29 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
+func LoadDatabaseHandler(c *gin.Context) {
+	var req struct {
+		Path string `json:"path"`
+	}
+
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		return
+	}
+
+	err := LoadDatabase(req.Path)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Database loaded", "path": req.Path})
+}
+
+func GetCurrentDatabaseHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"path": GetCurrentPath()})
+}
+
 func ListBucketsHandler(c *gin.Context) {
 	var buckets []string
 
