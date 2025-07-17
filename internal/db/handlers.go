@@ -9,7 +9,7 @@ import (
 
 func LoadDatabaseHandler(c *gin.Context) {
 	var req struct {
-		Path string `json:"path"`
+		Path string `json:"dbFilePath"`
 	}
 
 	if err := c.BindJSON(&req); err != nil {
