@@ -17,7 +17,7 @@ export const startDbConnection = async (payload: connectionParams) => {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
 	});
-	return res.json();
+	return {data: await res.json(), status: res.status};
 };
 
 export async function getBuckets() {

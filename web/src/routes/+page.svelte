@@ -21,14 +21,19 @@
 		};
 
 		try {
-			const result = await startDbConnection(payload);
+			const { data, status } = await startDbConnection(payload);
+      console.log({data, status})
 			loading = false;
 
-			if (result.message) {
-				message = result.message;
+			if (data.message) {
+				message = data.message;
 			} else {
-				error = result.error;
+				error = data.error;
 			}
+
+      if (status == 200) {
+        window.location.href = '/bucket'
+      }
 		} catch (_error) {
       error = 'Something went wrong. Please try again';
     }
@@ -38,22 +43,7 @@
 <div
 	class="card preset-filled-surface-100-900 bg-card mx-auto mt-10 w-full max-w-2xl max-w-md space-y-6 rounded-xl border p-4 p-6 text-center shadow-lg"
 >
-	<h2 class="mb-4 text-2xl font-bold">🔗 Connect to BoltDB</h2>
-
-	<!-- User Info -->
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-		<div>
-			<label for="" class="text-muted-foreground mb-1 block text-sm font-medium">DB Name</label>
-			<input id="db-name" type="text" bind:value={name} placeholder="Enter DB name" class="input" />
-		</div>
-
-		<div>
-			<label for="db-port" class="text-muted-foreground mb-1 block text-sm font-medium"
-				>DB Port</label
-			>
-			<input id="db-port" type="text" bind:value={port} placeholder="Enter DB port" class="input" />
-		</div>
-	</div>
+  <h1 class="h1 text-center">🔗 Connect to Database</h1>
 
 	<!-- File Selection -->
 	<div>
