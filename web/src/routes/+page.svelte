@@ -22,7 +22,6 @@
 
 		try {
 			const result = await startDbConnection(payload);
-			console.log({ result });
 			loading = false;
 
 			if (result.message) {

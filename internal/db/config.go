@@ -23,3 +23,10 @@ func LoadDatabase(path string) error {
 func GetCurrentPath() string {
 	return currentPath
 }
+
+func IsConnected() bool {
+	if db != nil && currentPath != "" {
+		return true
+	}
+	return false
+}

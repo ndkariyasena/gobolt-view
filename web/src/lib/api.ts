@@ -6,6 +6,11 @@ export interface connectionParams {
 	dbFilePath: string;
 }
 
+export const isDbConnected = async () => {
+  const res = await fetch(`${API}/connection/is-active`);
+	return res.json();
+}
+
 export const startDbConnection = async (payload: connectionParams) => {
 	const res = await fetch(`${API}/config/db`, {
 		method: 'POST',

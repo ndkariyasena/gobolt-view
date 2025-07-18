@@ -7,6 +7,10 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
+func IsDatabaseConnected(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"isConnected": IsConnected()})
+}
+
 func LoadDatabaseHandler(c *gin.Context) {
 	var req struct {
 		Path string `json:"dbFilePath"`
