@@ -35,11 +35,18 @@ func GetCurrentDatabaseHandler(c *gin.Context) {
 }
 
 func ListBucketsHandler(c *gin.Context) {
-	var buckets []string
+	var bucketDetails = make(map[string]int)
 
 	err := db.View(func(tx *bolt.Tx) error {
-		return tx.ForEach(func(name []byte, _ *bolt.Bucket) error {
-			buckets = append(buckets, string(name))
+		return tx.ForEach(func(name []byte, bucket *bolt.Bucket) error {
+
+			count := 0
+			c := bucket.Cursor()
+			for k, _ := c.First(); k != nil; k, _ = c.Next() {
+				count++
+			}
+			bucketDetails[string(name)] = count
+
 			return nil
 		})
 	})
@@ -49,7 +56,7 @@ func ListBucketsHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"buckets": buckets})
+	c.JSON(http.StatusOK, gin.H{"bucketDetails": bucketDetails})
 }
 
 func ListKeysHandler(c *gin.Context) {

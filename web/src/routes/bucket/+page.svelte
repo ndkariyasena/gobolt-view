@@ -3,10 +3,12 @@
 	import { getBuckets } from '$lib/api';
 
 	let buckets: string[] = [];
+	let bucketDetails: Record<string, number> = {};
 
 	onMount(async () => {
 		const res = await getBuckets();
-		buckets = res.buckets;
+		bucketDetails = res.bucketDetails;
+    buckets = Object.keys(bucketDetails);
 	});
 
 	let search = '';
@@ -32,6 +34,7 @@
 		{#each filtered as bucket (bucket)}
 			<div class="card card-body flex cursor-pointer items-center justify-between hover:bg-sky-500 p-2 shadow-lg bg-gray-900">
 				<span class="font-semibold">{bucket}</span>
+				<span class="font-italic">{bucketDetails[bucket]}</span>
 				<a class="btn btn-sm preset-filled" href={`/bucket/${bucket}`}> View &rarr; </a>
 			</div>
 		{/each}
