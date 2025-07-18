@@ -24,13 +24,13 @@
 			type="text"
 			placeholder="Search buckets..."
 			bind:value={search}
-			class="form-input flex-1"
+			class="form-input flex-1 focus:outline-hidden focus:border-indigo-600 border-gray-300 rounded-md p-2"
 		/>
 	</div>
 
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each filtered as bucket (bucket)}
-			<div class="card card-body flex cursor-pointer items-center justify-between">
+			<div class="card card-body flex cursor-pointer items-center justify-between hover:bg-sky-500 p-2 shadow-lg bg-gray-900">
 				<span class="font-semibold">{bucket}</span>
 				<a class="btn btn-sm preset-filled" href={`/bucket/${bucket}`}> View &rarr; </a>
 			</div>
@@ -40,3 +40,4 @@
 		{/if}
 	</div>
 </section>
+
