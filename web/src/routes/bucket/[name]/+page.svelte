@@ -118,7 +118,11 @@
 							{#if isJson(item.value)}
 								<pre class="h-50 overflow-y-auto whitespace-pre-wrap">{formatJson(item.value)}</pre>
 							{:else}
-								{item.value}
+								<p
+									class="max-w-250 max-h-80 overflow-y-auto whitespace-pre-wrap break-words text-justify"
+								>
+									{item.value}
+								</p>
 							{/if}
 						</td>
 						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">
