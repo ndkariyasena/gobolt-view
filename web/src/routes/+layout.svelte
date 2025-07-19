@@ -7,6 +7,7 @@
 		if (window.location.pathname != '/') {
 			const res = await isDbConnected();
 			if (!res.isConnected) {
+        console.warn('Database not connected, redirecting to home');
 				window.location.href = '/';
 			}
 		}

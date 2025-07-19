@@ -26,7 +26,7 @@
 			type="text"
 			placeholder="Search buckets..."
 			bind:value={search}
-			class="form-input flex-1 focus:outline-hidden focus:border-indigo-600 border-gray-300 rounded-md p-2"
+			class="form-input flex-1 focus:outline-hidden focus:border-indigo-600 focus:outline-hidden rounded-md p-2"
 		/>
 	</div>
 

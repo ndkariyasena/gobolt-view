@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { startDbConnection } from '$lib/api';
+	import { saveConfig } from '$lib/storage';
 
 	let name = '';
 	let port = '';
@@ -32,6 +33,11 @@
 			}
 
       if (status == 200) {
+        saveConfig({
+          dbName: name,
+          dbPort: parseInt(port, 10),
+          dbFilePath: filePath
+        });
         window.location.href = '/bucket'
       }
 		} catch (_error) {

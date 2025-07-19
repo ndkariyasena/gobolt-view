@@ -34,3 +34,8 @@ export async function getValue(bucket: string, key: string) {
 	const res = await fetch(`${API}/bucket/${bucket}/key/${key}`);
 	return res.json();
 }
+
+export async function getKeyValuePares(bucket: string) {
+	const res = await fetch(`${API}/bucket/${bucket}/key-value`);
+	return res.json();
+}
