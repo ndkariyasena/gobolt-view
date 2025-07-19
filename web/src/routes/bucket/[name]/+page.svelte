@@ -1,23 +1,29 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
+	import Search from '@lucide/svelte/icons/search';
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
 	import { getKeyValuePares } from '$lib/api';
 
 	let bucketName = '';
 	let key = '';
 	let value = '';
-	let items: { key: string; value: string }[] = [];
+	let bucketKeyValues: { key: string; value: string }[] = [];
 	let openState = false;
 	let modalContent = '';
 	let modalHeader = 'Key-Value Details';
+	let search = '';
+
+	$: filteredKeyValues = search
+		? bucketKeyValues.filter((i) => i.key.toLowerCase().includes(search.toLowerCase()))
+		: bucketKeyValues;
 
 	$: bucketName = page.params.name;
 
 	function modalViewHandler(keyName?: string) {
 		if (keyName) {
 			modalHeader = `Details for Key: ${keyName}`;
-			modalContent = items.find((item) => item.key === keyName)?.value || '';
+			modalContent = bucketKeyValues.find((item) => item.key === keyName)?.value || '';
 		} else {
 			modalHeader = 'Key-Value Details';
 			modalContent = '';
@@ -29,7 +35,7 @@
 		const res = await getKeyValuePares(bucketName);
 
 		if (res.keyValues && res.keyValues.length > 0) {
-			items = res.keyValues;
+			bucketKeyValues = res.keyValues;
 		}
 	});
 
@@ -75,6 +81,18 @@
 <section class="container mx-auto max-w-7xl space-y-6 p-6">
 	<h1 class="h1 text-center">📂 Bucket: <span class="text-primary">{bucketName}</span></h1>
 
+	<div class="relative w-full flex-1">
+		<input
+			type="text"
+			placeholder="Search keys..."
+			bind:value={search}
+			class="form-input w-full rounded-md p-2 pl-10 focus:border-hidden focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
+		/>
+		<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+			<Search size={18} />
+		</span>
+	</div>
+
 	<!-- Add New Entry Form -->
 	<!-- <div class="card card-body space-y-4">
 		<h2 class="h3">➕ Add Entry</h2>
@@ -93,7 +111,7 @@
 	<div class="card card-body space-y-4">
 		<h2 class="h3">📋 Entries</h2>
 
-		{#if items.length === 0}
+		{#if bucketKeyValues.length === 0}
 			<p class="text-muted">No items found in this bucket.</p>
 		{/if}
 	</div>
@@ -109,7 +127,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each items as item}
+				{#each filteredKeyValues as item}
 					<tr>
 						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">{item.key}</td>
 						<td
