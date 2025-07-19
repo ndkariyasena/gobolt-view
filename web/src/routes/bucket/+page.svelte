@@ -32,7 +32,7 @@
 
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each filtered as bucket (bucket)}
-			<div class="card card-body flex cursor-pointer items-center justify-between hover:bg-sky-500 p-2 shadow-lg bg-gray-900">
+			<div class="card card-body flex cursor-pointer items-center justify-between hover:bg-sky-500 p-2 shadow-lg bg-slate-700">
 				<span class="font-semibold">{bucket}</span>
 				<span class="font-italic">{bucketDetails[bucket]}</span>
 				<a class="btn btn-sm preset-filled" href={`/bucket/${bucket}`}> View &rarr; </a>

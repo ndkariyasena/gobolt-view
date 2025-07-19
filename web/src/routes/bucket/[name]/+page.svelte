@@ -43,6 +43,22 @@
       items = items.filter((i) => i.key !== k);
     }
   } */
+	function isJson(str: string) {
+		try {
+			JSON.parse(str);
+			return true;
+		} catch {
+			return false;
+		}
+	}
+
+	function formatJson(str: string) {
+		try {
+			return JSON.stringify(JSON.parse(str), null, 2);
+		} catch {
+			return str;
+		}
+	}
 </script>
 
 <section class="container mx-auto max-w-7xl space-y-6 p-6">
@@ -70,33 +86,32 @@
 			<p class="text-muted">No items found in this bucket.</p>
 		{/if}
 	</div>
-
-	<table class="border-separate border-spacing-2 border border-gray-400 dark:border-gray-500 w-fit max-w-7xl relative">
-		<thead>
-			<tr>
-				<th class="border border-gray-300 dark:border-gray-600 p-2">Key</th>
-				<th class="border border-gray-300 dark:border-gray-600 p-2">Value</th>
-			</tr>
-		</thead>
-		<tbody>
-      {#each items as item}
-        <tr>
-          <td class="border border-gray-300 dark:border-gray-700 p-2">{item.key}</td>
-          <td class="border border-gray-300 dark:border-gray-700 p-2">{item.value}</td>
-			  </tr>
-      {/each}
-			<tr>
-				<td class="border border-gray-300 dark:border-gray-700">Indiana</td>
-				<td class="border border-gray-300 dark:border-gray-700">Indianapolis</td>
-			</tr>
-			<tr>
-				<td class="border border-gray-300 dark:border-gray-700">Ohio</td>
-				<td class="border border-gray-300 dark:border-gray-700">Columbus</td>
-			</tr>
-			<tr>
-				<td class="border border-gray-300 dark:border-gray-700">Michigan</td>
-				<td class="border border-gray-300 dark:border-gray-700">Detroit</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="overflow-x-auto">
+		<table
+			class="relative min-w-full border-separate border-spacing-2 border border-gray-400 dark:border-gray-500"
+		>
+			<thead>
+				<tr>
+					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Key</th>
+					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each items as item}
+					<tr>
+						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">{item.key}</td>
+						<td
+							class="break-inside-avoid-column border border-gray-300 bg-slate-700 p-2 dark:border-gray-700"
+						>
+							{#if isJson(item.value)}
+								<pre class="whitespace-pre-wrap h-50 overflow-y-auto">{formatJson(item.value)}</pre>
+							{:else}
+								{item.value}
+							{/if}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
 </section>
