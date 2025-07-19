@@ -2,14 +2,24 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { Modal } from '@skeletonlabs/skeleton-svelte';
 	import { getKeyValuePares } from '$lib/api';
 
 	let bucketName = '';
 	let key = '';
 	let value = '';
 	let items: { key: string; value: string }[] = [];
+	let openState = false;
 
 	$: bucketName = $page.params.name;
+
+	function modalClose() {
+		openState = false;
+	}
+
+  function modalViewHandler() {
+    openState = !openState;
+  }
 
 	onMount(async () => {
 		/* const dbPath = localStorage.getItem('gobolt-db-path');
@@ -94,6 +104,7 @@
 				<tr>
 					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Key</th>
 					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Value</th>
+					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -104,14 +115,41 @@
 							class="break-inside-avoid-column border border-gray-300 bg-slate-700 p-2 dark:border-gray-700"
 						>
 							{#if isJson(item.value)}
-								<pre class="whitespace-pre-wrap h-50 overflow-y-auto">{formatJson(item.value)}</pre>
+								<pre class="h-50 overflow-y-auto whitespace-pre-wrap">{formatJson(item.value)}</pre>
 							{:else}
 								{item.value}
 							{/if}
+						</td>
+						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">
+							<button type="button" class="btn btn-sm preset-filled" onclick={modalViewHandler}>View</button>
 						</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
 	</div>
+
+	<Modal
+		open={openState}
+		onOpenChange={(e) => (openState = e.open)}
+		triggerBase="btn preset-tonal"
+		contentBase="card bg-surface-100-900 p-4 space-y-4 shadow-xl max-w-screen-sm"
+		backdropClasses="backdrop-blur-sm"
+	>
+		{#snippet content()}
+			<header class="flex justify-between">
+				<h2 class="h2">Modal Example</h2>
+			</header>
+			<article>
+				<p class="opacity-60">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, ab adipisci. Libero cumque
+					sunt quis error veritatis amet, expedita voluptatem. Quos repudiandae consequuntur
+					voluptatem et dicta quas, reprehenderit velit excepturi?
+				</p>
+			</article>
+			<footer class="flex justify-end gap-4">
+				<button type="button" class="btn preset-filled" onclick={modalViewHandler}>Close</button>
+			</footer>
+		{/snippet}
+	</Modal>
 </section>
