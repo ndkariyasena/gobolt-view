@@ -1,27 +1,46 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { getKeys } from '$lib/api';
-  import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
+	import { getBuckets } from '$lib/api';
 
-  let keys: string[] = [];
-  let bucket = '';
+	let buckets: string[] = [];
+	let bucketDetails: Record<string, number> = {};
 
-  $: bucket = $page.params.name;
+	onMount(async () => {
+		const res = await getBuckets();
+		bucketDetails = res.bucketDetails;
+    buckets = Object.keys(bucketDetails);
+	});
 
-  onMount(async () => {
-    const res = await getKeys(bucket);
-    keys = res.keys;
-  });
+	let search = '';
+
+	$: filtered = search
+		? buckets.filter((b) => b.toLowerCase().includes(search.toLowerCase()))
+		: buckets;
 </script>
 
-<h2 class="text-xl font-semibold mb-2">🔑 Keys in <code>{bucket}</code></h2>
+<section class="container mx-auto space-y-6 p-6">
+	<h1 class="h1">🔖 Buckets</h1>
 
-<ul class="space-y-1">
-  {#each keys as key}
-    <li>
-      <a href={`/bucket/${bucket}/key/${key}`} class="text-green-600 hover:underline">
-        {key}
-      </a>
-    </li>
-  {/each}
-</ul>
+	<div class="flex flex-col items-center gap-4 md:flex-row">
+		<input
+			type="text"
+			placeholder="Search buckets..."
+			bind:value={search}
+			class="form-input flex-1 focus:outline-hidden focus:border-indigo-600 focus:outline-hidden rounded-md p-2"
+		/>
+	</div>
+
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		{#each filtered as bucket (bucket)}
+			<div class="card card-body flex cursor-pointer items-center justify-between hover:bg-sky-500 p-2 shadow-lg bg-slate-700">
+				<span class="font-semibold">{bucket}</span>
+				<span class="font-italic">{bucketDetails[bucket]}</span>
+				<a class="btn btn-sm preset-filled" href={`/bucket/${bucket}`}> View &rarr; </a>
+			</div>
+		{/each}
+		{#if filtered.length === 0}
+			<p class="text-muted-foreground col-span-full mt-4 text-center">No buckets found.</p>
+		{/if}
+	</div>
+</section>
+

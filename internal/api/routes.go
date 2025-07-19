@@ -10,9 +10,11 @@ func SetupRoutes(r *gin.Engine) {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
 
+	r.GET("/connection/is-active", db.IsDatabaseConnected)
 	r.POST("/config/db", db.LoadDatabaseHandler)
 	r.GET("/config/db", db.GetCurrentDatabaseHandler)
 	r.GET("/buckets", db.ListBucketsHandler)
 	r.GET("/bucket/:name/keys", db.ListKeysHandler)
+	r.GET("/bucket/:name/key-value", db.ListKeyValuesHandler)
 	r.GET("/bucket/:name/key/:key", db.GetValueHandler)
 }

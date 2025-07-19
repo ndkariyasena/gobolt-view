@@ -6,13 +6,18 @@ export interface connectionParams {
 	dbFilePath: string;
 }
 
+export const isDbConnected = async () => {
+  const res = await fetch(`${API}/connection/is-active`);
+	return res.json();
+}
+
 export const startDbConnection = async (payload: connectionParams) => {
 	const res = await fetch(`${API}/config/db`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
 	});
-	return res.json();
+	return {data: await res.json(), status: res.status};
 };
 
 export async function getBuckets() {
@@ -27,5 +32,10 @@ export async function getKeys(bucket: string) {
 
 export async function getValue(bucket: string, key: string) {
 	const res = await fetch(`${API}/bucket/${bucket}/key/${key}`);
+	return res.json();
+}
+
+export async function getKeyValuePares(bucket: string) {
+	const res = await fetch(`${API}/bucket/${bucket}/key-value`);
 	return res.json();
 }
