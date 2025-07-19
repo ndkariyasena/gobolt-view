@@ -10,16 +10,16 @@
 	let items: { key: string; value: string }[] = [];
 	let openState = false;
 	let modalContent = '';
-  let modalHeader = 'Key-Value Details';
+	let modalHeader = 'Key-Value Details';
 
 	$: bucketName = page.params.name;
 
 	function modalViewHandler(keyName?: string) {
 		if (keyName) {
-      modalHeader = `Details for Key: ${keyName}`;
+			modalHeader = `Details for Key: ${keyName}`;
 			modalContent = items.find((item) => item.key === keyName)?.value || '';
 		} else {
-      modalHeader = 'Key-Value Details';
+			modalHeader = 'Key-Value Details';
 			modalContent = '';
 		}
 		openState = !openState;
@@ -138,26 +138,28 @@
 		open={openState}
 		onOpenChange={(e) => (openState = e.open)}
 		triggerBase="btn preset-tonal"
-		contentBase="card bg-surface-100-900 p-5 space-y-4 shadow-xl w-dvh h-120 max-w-full max-h-100vh overflow-y-auto"
+		contentBase="card bg-surface-100-900 p-5 space-y-4 shadow-xl w-dvh h-75 max-w-full max-h-75vh overflow-y-auto flex flex-col h-full"
 		backdropClasses="backdrop-blur-sm"
 	>
 		{#snippet content()}
 			<header class="flex justify-between">
 				<h2 class="h2">{modalHeader}</h2>
 			</header>
-			<article>
+			<article class="flex-1 overflow-y-auto">
 				{#if isJson(modalContent)}
 					<pre class="h-75 overflow-y-auto whitespace-pre-wrap">{formatJson(modalContent)}</pre>
 				{:else}
-					<p class="opacity-60">
+					<p
+						class="max-h-80 overflow-y-auto whitespace-pre-wrap break-words text-justify opacity-60"
+					>
 						{modalContent}
 					</p>
 				{/if}
 			</article>
-			<footer class="flex justify-end gap-4">
-				<button type="button" class="btn preset-filled" onclick={() => modalViewHandler(undefined)}
-					>Close</button
-				>
+			<footer class="flex shrink-0 justify-end gap-4">
+				<button type="button" class="btn preset-filled" onclick={() => modalViewHandler(undefined)}>
+					Close
+				</button>
 			</footer>
 		{/snippet}
 	</Modal>
