@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
 	import { getKeyValuePares } from '$lib/api';
 
@@ -10,23 +9,25 @@
 	let value = '';
 	let items: { key: string; value: string }[] = [];
 	let openState = false;
+	let modalContent = '';
+  let modalHeader = 'Key-Value Details';
 
-	$: bucketName = $page.params.name;
+	$: bucketName = page.params.name;
 
-	function modalClose() {
-		openState = false;
+	function modalViewHandler(keyName?: string) {
+		if (keyName) {
+      modalHeader = `Details for Key: ${keyName}`;
+			modalContent = items.find((item) => item.key === keyName)?.value || '';
+		} else {
+      modalHeader = 'Key-Value Details';
+			modalContent = '';
+		}
+		openState = !openState;
 	}
 
-  function modalViewHandler() {
-    openState = !openState;
-  }
-
 	onMount(async () => {
-		/* const dbPath = localStorage.getItem('gobolt-db-path');
-    if (!dbPath) return goto('/'); */
-
 		const res = await getKeyValuePares(bucketName);
-		console.log({ res });
+
 		if (res.keyValues && res.keyValues.length > 0) {
 			items = res.keyValues;
 		}
@@ -121,7 +122,11 @@
 							{/if}
 						</td>
 						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">
-							<button type="button" class="btn btn-sm preset-filled" onclick={modalViewHandler}>View</button>
+							<button
+								type="button"
+								class="btn btn-sm preset-filled"
+								onclick={() => modalViewHandler(item.key)}>View</button
+							>
 						</td>
 					</tr>
 				{/each}
@@ -133,22 +138,26 @@
 		open={openState}
 		onOpenChange={(e) => (openState = e.open)}
 		triggerBase="btn preset-tonal"
-		contentBase="card bg-surface-100-900 p-4 space-y-4 shadow-xl max-w-screen-sm"
+		contentBase="card bg-surface-100-900 p-5 space-y-4 shadow-xl w-dvh h-120 max-w-full max-h-100vh overflow-y-auto"
 		backdropClasses="backdrop-blur-sm"
 	>
 		{#snippet content()}
 			<header class="flex justify-between">
-				<h2 class="h2">Modal Example</h2>
+				<h2 class="h2">{modalHeader}</h2>
 			</header>
 			<article>
-				<p class="opacity-60">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, ab adipisci. Libero cumque
-					sunt quis error veritatis amet, expedita voluptatem. Quos repudiandae consequuntur
-					voluptatem et dicta quas, reprehenderit velit excepturi?
-				</p>
+				{#if isJson(modalContent)}
+					<pre class="h-75 overflow-y-auto whitespace-pre-wrap">{formatJson(modalContent)}</pre>
+				{:else}
+					<p class="opacity-60">
+						{modalContent}
+					</p>
+				{/if}
 			</article>
 			<footer class="flex justify-end gap-4">
-				<button type="button" class="btn preset-filled" onclick={modalViewHandler}>Close</button>
+				<button type="button" class="btn preset-filled" onclick={() => modalViewHandler(undefined)}
+					>Close</button
+				>
 			</footer>
 		{/snippet}
 	</Modal>
