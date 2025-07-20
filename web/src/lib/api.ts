@@ -7,12 +7,12 @@ export interface connectionParams {
 }
 
 export const isDbConnected = async () => {
-  const res = await fetch(`${API}/connection/is-active`);
+  const res = await fetch(`${API}/api/connection/is-active`);
 	return res.json();
 }
 
 export const startDbConnection = async (payload: connectionParams) => {
-	const res = await fetch(`${API}/config/db`, {
+	const res = await fetch(`${API}/api/config/db`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
@@ -21,21 +21,21 @@ export const startDbConnection = async (payload: connectionParams) => {
 };
 
 export async function getBuckets() {
-	const res = await fetch(`${API}/buckets`);
+	const res = await fetch(`${API}/api/buckets`);
 	return res.json();
 }
 
 export async function getKeys(bucket: string) {
-	const res = await fetch(`${API}/bucket/${bucket}/keys`);
+	const res = await fetch(`${API}/api/bucket/${bucket}/keys`);
 	return res.json();
 }
 
 export async function getValue(bucket: string, key: string) {
-	const res = await fetch(`${API}/bucket/${bucket}/key/${key}`);
+	const res = await fetch(`${API}/api/bucket/${bucket}/key/${key}`);
 	return res.json();
 }
 
 export async function getKeyValuePares(bucket: string) {
-	const res = await fetch(`${API}/bucket/${bucket}/key-value`);
+	const res = await fetch(`${API}/api/bucket/${bucket}/key-value`);
 	return res.json();
 }
