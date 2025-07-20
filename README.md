@@ -1,5 +1,7 @@
 # gobolt-view
 
+## Still in progress!
+
 A web-based user interface for managing and visualizing BoltDB databases.
 
 ## Features
