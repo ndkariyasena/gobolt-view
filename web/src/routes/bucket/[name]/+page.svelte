@@ -86,7 +86,7 @@
 			type="text"
 			placeholder="Search keys..."
 			bind:value={search}
-			class="form-input w-full rounded-md p-2 pl-10 focus:border-hidden focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
+			class="form-input focus:outline-hidden w-full rounded-md p-2 pl-10 focus:border-hidden focus:ring-2 focus:ring-indigo-600"
 		/>
 		<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
 			<Search size={18} />
@@ -116,44 +116,50 @@
 		{/if}
 	</div>
 	<div class="overflow-x-auto">
-		<table
-			class="relative min-w-full border-separate border-spacing-2 border border-gray-400 dark:border-gray-500"
-		>
-			<thead>
-				<tr>
-					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Key</th>
-					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Value</th>
-					<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each filteredKeyValues as item}
+		{#if bucketKeyValues.length > 0}
+			<table
+				class="relative min-w-full border-separate border-spacing-2 border border-gray-400 dark:border-gray-500"
+			>
+				<thead>
 					<tr>
-						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">{item.key}</td>
-						<td
-							class="break-inside-avoid-column border border-gray-300 bg-slate-700 p-2 dark:border-gray-700"
-						>
-							{#if isJson(item.value)}
-								<pre class="h-50 overflow-y-auto whitespace-pre-wrap">{formatJson(item.value)}</pre>
-							{:else}
-								<p
-									class="max-w-250 max-h-80 overflow-y-auto whitespace-pre-wrap break-words text-justify"
-								>
-									{item.value}
-								</p>
-							{/if}
-						</td>
-						<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">
-							<button
-								type="button"
-								class="btn btn-sm preset-filled"
-								onclick={() => modalViewHandler(item.key)}>View</button
-							>
-						</td>
+						<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Key</th>
+						<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Value</th>
+						<th class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-600">Action</th>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{#each filteredKeyValues as item}
+						<tr>
+							<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700"
+								>{item.key}</td
+							>
+							<td
+								class="break-inside-avoid-column border border-gray-300 bg-slate-700 p-2 dark:border-gray-700"
+							>
+								{#if isJson(item.value)}
+									<pre class="h-50 overflow-y-auto whitespace-pre-wrap">{formatJson(
+											item.value
+										)}</pre>
+								{:else}
+									<p
+										class="max-w-250 max-h-80 overflow-y-auto whitespace-pre-wrap break-words text-justify"
+									>
+										{item.value}
+									</p>
+								{/if}
+							</td>
+							<td class="border border-gray-300 bg-slate-700 p-2 dark:border-gray-700">
+								<button
+									type="button"
+									class="btn btn-sm preset-filled"
+									onclick={() => modalViewHandler(item.key)}>View</button
+								>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{/if}
 	</div>
 
 	<Modal
