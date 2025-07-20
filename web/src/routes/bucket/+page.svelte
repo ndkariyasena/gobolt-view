@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Search from '@lucide/svelte/icons/search';
 	import { getBuckets } from '$lib/api';
 
 	let buckets: string[] = [];
@@ -19,15 +20,18 @@
 </script>
 
 <section class="container mx-auto space-y-6 p-6">
-	<h1 class="h1">🔖 Buckets</h1>
+	<h1 class="h1">🪣 Buckets</h1>
 
-	<div class="flex flex-col items-center gap-4 md:flex-row">
+	<div class="relative w-full flex-1">
 		<input
 			type="text"
 			placeholder="Search buckets..."
 			bind:value={search}
-			class="form-input flex-1 focus:outline-hidden focus:border-indigo-600 focus:outline-hidden rounded-md p-2"
+			class="form-input w-full rounded-md p-2 pl-10 focus:border-hidden focus:outline-hidden focus:ring-2 focus:ring-indigo-600"
 		/>
+		<span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+			<Search size={18} />
+		</span>
 	</div>
 
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
