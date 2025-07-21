@@ -55,3 +55,19 @@ Please adhere to the [Contributor Covenant Code of Conduct](https://www.contribu
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/username/gobolt-view/blob/main/LICENSE) file for details.
+
+## Sample views
+
+### Screenshots
+
+#### Main Dashboard
+![Main Dashboard](./screenshots/Screenshot%202025-07-22%20at%2000.21.39.png)
+
+#### Bucket View
+![Bucket View](./screenshots/Screenshot%202025-07-22%20at%2000.22.10.png)
+
+#### Key/Value Editor
+![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.25.00.png)
+
+#### Query View
+![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.26.40.png)
