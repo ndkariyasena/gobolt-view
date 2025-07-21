@@ -4,6 +4,7 @@
 	import Search from '@lucide/svelte/icons/search';
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
 	import { getKeyValuePares } from '$lib/api';
+	import { formatJson, isJson } from '$lib/utils';
 
 	let bucketName = '';
 	let key = '';
@@ -60,22 +61,6 @@
       items = items.filter((i) => i.key !== k);
     }
   } */
-	function isJson(str: string) {
-		try {
-			JSON.parse(str);
-			return true;
-		} catch {
-			return false;
-		}
-	}
-
-	function formatJson(str: string) {
-		try {
-			return JSON.stringify(JSON.parse(str), null, 2);
-		} catch {
-			return str;
-		}
-	}
 </script>
 
 <section class="container mx-auto max-w-7xl space-y-6 p-6">

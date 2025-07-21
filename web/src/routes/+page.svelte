@@ -23,7 +23,7 @@
 
 		try {
 			const { data, status } = await startDbConnection(payload);
-      console.log({data, status})
+      
 			loading = false;
 
 			if (data.message) {
@@ -47,7 +47,7 @@
 </script>
 
 <div
-	class="card preset-filled-surface-100-900 bg-card mx-auto mt-10 w-full max-w-2xl max-w-md space-y-6 rounded-xl border p-4 p-6 text-center shadow-lg"
+	class="card preset-filled-surface-100-900 bg-card mx-auto mt-10 w-full max-w-2xl space-y-6 rounded-xl border p-4 p-6 text-center shadow-lg"
 >
   <h1 class="h1 text-center">🔗 Connect to Database</h1>
 
