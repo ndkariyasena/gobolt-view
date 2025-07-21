@@ -1,36 +1,73 @@
 # gobolt-view
 
-## Still in progress!
+## *Incomplete
 
-A web-based user interface for managing and visualizing BoltDB databases.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/username/gobolt-view/blob/main/LICENSE)
+[![Svelte](https://img.shields.io/badge/Svelte-3-orange)](https://svelte.dev/)
 
-## Features
+Web UI application for the BoltDB database
 
-- Browse and search BoltDB buckets and keys
-- View and edit key-value pairs
-- Import and export database files
-- User-friendly, responsive interface
+## Key Features and Highlights
 
-## Getting Started
+- Provides a user-friendly web interface for interacting with BoltDB
+- Built with Svelte, a modern web framework
+- Streamlined design for efficient data management
 
-1. Clone the repository:
-  ```bash
-  git clone https://github.com/yourusername/gobolt-view.git
-  ```
-2. Install dependencies and run the application:
-  ```bash
-  cd gobolt-view/web
-  npm install
-  npm start
-  go run ../cmd/main.go start
-  ```
+## Installation
 
-## Technologies Used
+To install `gobolt-view`, follow these steps:
 
-- Svelte
-- BoltDB
-- Go Gin
+1. Clone this repository
+   ```bash
+   git clone https://github.com/username/gobolt-view.git
+   ```
+
+2. Install dependencies
+   ```bash
+   cd gobolt-view
+   npm install
+   ```
+
+## Usage
+
+```bash
+# Start the application
+npm start
+```
+
+Open your browser and go to `http://localhost:5000` to access the `gobolt-view` application.
+
+## Dependencies
+
+- Svelte 3
+
+## Contributing
+
+Contributions are welcome! To contribute to `gobolt-view`, follow these steps:
+
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
+
+Please adhere to the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/username/gobolt-view/blob/main/LICENSE) file for details.
+
+## Sample views
+
+### Screenshots
+
+#### Main Dashboard
+![Main Dashboard](./screenshots/Screenshot%202025-07-22%20at%2000.21.39.png)
+
+#### Bucket View
+![Bucket View](./screenshots/Screenshot%202025-07-22%20at%2000.22.10.png)
+
+#### Key/Value Editor
+![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.25.00.png)
+
+#### Query View
+![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.26.40.png)
