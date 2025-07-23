@@ -3,13 +3,14 @@
 	import { onMount } from 'svelte';
 	import Search from '@lucide/svelte/icons/search';
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
-	import { getKeyValuePares } from '$lib/api';
+	import { getKeys } from '$lib/api';
+	import type { KeyValues, KeyValuesResponse } from '$lib/types';
 	import { formatJson, isJson } from '$lib/utils';
 
 	let bucketName = '';
 	let key = '';
 	let value = '';
-	let bucketKeyValues: { key: string; value: string }[] = [];
+	let bucketKeyValues: KeyValues = [];
 	let openState = false;
 	let modalContent = '';
 	let modalHeader = 'Key-Value Details';
@@ -33,7 +34,7 @@
 	}
 
 	onMount(async () => {
-		const res = await getKeyValuePares(bucketName);
+		const res: KeyValuesResponse = await getKeys(bucketName);
 
 		if (res.keyValues && res.keyValues.length > 0) {
 			bucketKeyValues = res.keyValues;

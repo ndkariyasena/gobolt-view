@@ -3,13 +3,14 @@
 	import Search from '@lucide/svelte/icons/search';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { getBuckets } from '$lib/api';
+	import type { BucketDetails } from '$lib/types';
 	import { goto } from '$app/navigation';
 
 	let buckets: string[] = [];
 	let bucketDetails: Record<string, number> = {};
 
 	onMount(async () => {
-		const res = await getBuckets();
+		const res: BucketDetails = await getBuckets();
 		bucketDetails = res.bucketDetails;
 		buckets = Object.keys(bucketDetails);
 	});

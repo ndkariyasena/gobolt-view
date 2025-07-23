@@ -12,7 +12,6 @@ func SetupRoutes(server *gin.Engine) {
 	router.POST("/config/db", db.LoadDatabaseHandler)
 	router.GET("/config/db", db.GetCurrentDatabaseHandler)
 	router.GET("/buckets", db.ListBucketsHandler)
-	router.GET("/bucket/:name/keys", db.ListKeysHandler)
-	router.GET("/bucket/:name/key-value", db.ListKeyValuesHandler)
+	router.GET("/bucket/:name/keys", db.ListKeyValuesHandler)
 	router.GET("/bucket/:name/key/:key", db.GetValueHandler)
 }
