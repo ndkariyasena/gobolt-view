@@ -40,7 +40,7 @@ tell application "iTerm2"
     end tell
     create tab with default profile
     tell current session
-      write text "cd '$SCRIPT_DIR' && cd web/ && npm run start"
+      write text "cd '$SCRIPT_DIR' && cd web/ && npm run build && npm run start"
     end tell
   end tell
 end tell
@@ -51,7 +51,7 @@ elif [[ "$terminal" == "Terminal" ]]; then
 tell application "Terminal"
   do script "cd '$SCRIPT_DIR' && cd server/ && go run main.go"
   delay 1
-  do script "cd '$SCRIPT_DIR' && cd web && npm run start" in front window
+  do script "cd '$SCRIPT_DIR' && cd web/ && npm run build && npm run start" in front window
 end tell
 EOF
 
