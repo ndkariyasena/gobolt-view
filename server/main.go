@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
 	"github.com/gin-contrib/cors"
@@ -13,13 +12,11 @@ import (
 var portNumber string
 
 func main() {
-	flag.StringVar(&portNumber, "port", "8080", "Port number for the server to listen on")
+	flag.StringVar(&portNumber, "port", "8000", "Port number for the server to listen on")
 	flag.Parse()
 
 	server := gin.Default()
 	server.Use(cors.Default())
-
-	fmt.Println(portNumber)
 
 	server.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "pong"})
