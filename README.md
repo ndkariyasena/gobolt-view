@@ -1,41 +1,75 @@
 # gobolt-view
 
-## *Incomplete
+## *Incomplete!
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/username/gobolt-view/blob/main/LICENSE)
+[![GoGin](https://img.shields.io/badge/Go-Gin-blue)](https://go.dev/)
 [![Svelte](https://img.shields.io/badge/Svelte-3-orange)](https://svelte.dev/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/username/gobolt-view/blob/main/LICENSE)
+[![BoltDB](https://img.shields.io/badge/Bolt-DB-green)](https://dbdb.io/db/boltdb)
+[![BoltDB](https://img.shields.io/badge/Bolt-DB-blue)](https://tailwindcss.com/)
 
-Web UI application for the BoltDB database
+A modern web UI for managing BoltDB databases, built with Svelte.
 
-## Key Features and Highlights
+## Features
 
-- Provides a user-friendly web interface for interacting with BoltDB
-- Built with Svelte, a modern web framework
-- Streamlined design for efficient data management
+- Intuitive web interface for BoltDB
+- Built with Svelte 3 for a fast, reactive experience
+- Efficient data browsing, editing, and management
+- Clean, streamlined design
 
-## Installation
+## Getting Started
 
-To install `gobolt-view`, follow these steps:
+### Prerequisites
 
-1. Clone this repository
-   ```bash
-   git clone https://github.com/username/gobolt-view.git
-   ```
+- [Go Lang](https://go.dev/)
+- [Node.js](https://nodejs.org/) (v18 or newer)
+- [npm](https://www.npmjs.com/)
 
-2. Install dependencies
-   ```bash
-   cd gobolt-view
-   npm install
-   ```
+### Installation
 
-## Usage
+1. **Clone the repository**
+  ```bash
+  git clone https://github.com/username/gobolt-view.git
+  cd gobolt-view
+  ```
+
+2. **Install dependencies**
+  ```bash
+  go install
+  cd web/
+  npm install
+  ```
+
+### Running the Application
+
+You can start the development server with:
 
 ```bash
-# Start the application
-npm start
+cd server/
+go run main.go [flags]
 ```
 
-Open your browser and go to `http://localhost:5000` to access the `gobolt-view` application.
+Then you can start the web server with:
+
+```bash
+cd web/
+npm run start [flags]
+```
+
+Then open your browser at [http://localhost:4000](http://localhost:4000) to use gobolt-view.
+
+#### Using the `start-gobolt.sh` Script
+
+For convenience, you can use the provided `start-gobolt.sh` script to launch the application. This script automates the startup process. Run:
+
+```bash
+./start-gobolt.sh
+```
+
+Make sure the script has execute permissions:
+```bash
+chmod +x start-gobolt.sh
+```
 
 ## Dependencies
 
@@ -43,31 +77,29 @@ Open your browser and go to `http://localhost:5000` to access the `gobolt-view` 
 
 ## Contributing
 
-Contributions are welcome! To contribute to `gobolt-view`, follow these steps:
+Contributions are welcome! To contribute:
 
 1. Fork the repository
-2. Create a new branch
+2. Create a new branch for your feature or fix
 3. Make your changes
 4. Submit a pull request
 
-Please adhere to the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
+Please follow the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/username/gobolt-view/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/username/gobolt-view/blob/main/LICENSE) for details.
 
-## Sample views
+## Screenshots
 
-### Screenshots
-
-#### Main Dashboard
+### Main Dashboard
 ![Main Dashboard](./screenshots/Screenshot%202025-07-22%20at%2000.21.39.png)
 
-#### Bucket View
+### Bucket View
 ![Bucket View](./screenshots/Screenshot%202025-07-22%20at%2000.22.10.png)
 
-#### Key/Value Editor
+### Key/Value Editor
 ![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.25.00.png)
 
-#### Query View
+### Query View
 ![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.26.40.png)
