@@ -1,7 +1,5 @@
 # gobolt-view
 
-## *Incomplete!
-
 [![GoGin](https://img.shields.io/badge/Go-Gin-blue)](https://go.dev/)
 [![Svelte](https://img.shields.io/badge/Svelte-3-orange)](https://svelte.dev/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/username/gobolt-view/blob/main/LICENSE)

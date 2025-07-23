@@ -4,6 +4,8 @@
 	import Search from '@lucide/svelte/icons/search';
 	import Delete from '@lucide/svelte/icons/delete';
 	import { getBuckets, getValue } from '$lib/api';
+	import type { ValueResponse } from '$lib/types';
+	import type { BucketDetails } from '$lib/types';
 	import { formatJson, isJson } from '$lib/utils';
 
 	const toaster = createToaster({
@@ -47,7 +49,7 @@
       return;
 		}
 
-		const results = await getValue(query.bucket, query.key);
+		const results: ValueResponse = await getValue(query.bucket, query.key);
 		if (results?.value) {
 			query.results = results.value;
 		} else {
@@ -73,10 +75,6 @@
 	};
 
 	const selectOnChangeKey = (event: Event, id: string) => {
-		console.log({
-			key: (event.target as HTMLInputElement).value,
-			id
-		});
 		if (queryMap.has(Number(id))) {
 			const query = queryMap.get(Number(id));
 			if (query) {
@@ -87,7 +85,7 @@
 
 	onMount(async () => {
 		addQuery(false);
-		const res = await getBuckets();
+		const res: BucketDetails = await getBuckets();
 		bucketDetails = res.bucketDetails;
 		buckets = Object.keys(bucketDetails);
 	});

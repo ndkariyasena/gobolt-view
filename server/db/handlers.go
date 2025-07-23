@@ -59,29 +59,6 @@ func ListBucketsHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"bucketDetails": bucketDetails})
 }
 
-func ListKeysHandler(c *gin.Context) {
-	bucket := c.Param("name")
-	var keys []string
-
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(bucket))
-		if b == nil {
-			return nil
-		}
-		return b.ForEach(func(k, _ []byte) error {
-			keys = append(keys, string(k))
-			return nil
-		})
-	})
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"keys": keys})
-}
-
 func ListKeyValuesHandler(c *gin.Context) {
 	bucket := c.Param("name")
 	var keyValues []map[string]string

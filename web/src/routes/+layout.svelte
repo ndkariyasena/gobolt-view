@@ -6,10 +6,11 @@
   import Home from '@lucide/svelte/icons/home';
 	import { onMount } from 'svelte';
 	import { isDbConnected } from '$lib/api';
+	import type { IsDbConnectedResponse } from '$lib/types';
 
 	onMount(async () => {
 		if (window.location.pathname != '/') {
-			const res = await isDbConnected();
+			const res: IsDbConnectedResponse = await isDbConnected();
 			if (!res.isConnected) {
         console.warn('Database not connected, redirecting to home');
 				window.location.href = '/';

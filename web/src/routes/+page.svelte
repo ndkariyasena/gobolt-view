@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { startDbConnection } from '$lib/api';
+	import type { ConnectionParams } from '$lib/types';
 	import { saveConfig } from '$lib/storage';
 
-	let name = '';
-	let port = '';
 	let filePath = '';
 
 	let message = '';
@@ -15,29 +14,23 @@
 		error = '';
 		message = '';
 
-		const payload = {
-			dbName: name,
-			dbPort: parseInt(port, 10),
+		const payload: ConnectionParams = {
 			dbFilePath: filePath
 		};
 
 		try {
-			const { data, status } = await startDbConnection(payload);
+			const res = await startDbConnection(payload);
       
 			loading = false;
 
-			if (data.message) {
-				message = data.message;
+			if (res.message) {
+				message = res.message;
 			} else {
-				error = data.error;
+				error = res.error || 'An unknown error occurred';
 			}
 
-      if (status == 200) {
-        saveConfig({
-          dbName: name,
-          dbPort: parseInt(port, 10),
-          dbFilePath: filePath
-        });
+      if (res.status == 200) {
+        saveConfig(payload);
         window.location.href = '/bucket'
       }
 		} catch (_error) {
