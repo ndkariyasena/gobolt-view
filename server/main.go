@@ -10,11 +10,14 @@ import (
 )
 
 var portNumber string
+var ginMode string
 
 func main() {
 	flag.StringVar(&portNumber, "port", "8000", "Port number for the server to listen on")
+	flag.StringVar(&ginMode, "mode", "release", "Gin mode: debug, release, or test")
 	flag.Parse()
 
+	gin.SetMode(ginMode)
 	server := gin.Default()
 	server.Use(cors.Default())
 

@@ -40,7 +40,7 @@ tell application "iTerm2"
     end tell
     create tab with default profile
     tell current session
-      write text "cd '$SCRIPT_DIR' && cd web && npm run start"
+      write text "cd '$SCRIPT_DIR' && cd web/ && npm run start"
     end tell
   end tell
 end tell
