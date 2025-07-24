@@ -96,8 +96,11 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 ### Bucket View
 ![Bucket View](./screenshots/Screenshot%202025-07-22%20at%2000.22.10.png)
 
+### Key/Value View
+![Key/Value View](./screenshots/Screenshot%202025-07-24%20at%2023.28.31.png)
+
 ### Key/Value Editor
-![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.25.00.png)
+![Key/Value Editor](./screenshots/Screenshot%202025-07-24%20at%2023.28.46.png)
 
 ### Query View
 ![Key/Value Editor](./screenshots/Screenshot%202025-07-22%20at%2000.26.40.png)
