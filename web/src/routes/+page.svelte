@@ -20,6 +20,7 @@
 
 		try {
 			const res = await startDbConnection(payload);
+      console.log('DB Connection Response:', res);
       
 			loading = false;
 
