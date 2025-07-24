@@ -4,7 +4,8 @@ import type {
 	BucketDetails,
 	KeyValuesResponse,
 	ValueResponse,
-	ConnectionParams
+	ConnectionParams,
+	FetchResponse
 } from './types';
 
 const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -44,29 +45,85 @@ export const startDbConnection = async (
 		});
 };
 
-export async function getBuckets(): Promise<BucketDetails> {
+export const getBuckets = async (): Promise<BucketDetails> => {
 	return await fetch(`${API}/api/buckets`)
 		.then((res) => res.json())
 		.catch((err) => {
 			console.error('Error fetching buckets:', err);
 			return { status: 500, bucketDetails: {} };
 		});
-}
+};
 
-export async function getKeys(bucket: string): Promise<KeyValuesResponse> {
+export const getKeys = async (bucket: string): Promise<KeyValuesResponse> => {
 	return await fetch(`${API}/api/bucket/${bucket}/keys`)
 		.then((res) => res.json())
 		.catch((err) => {
 			console.error('Error fetching keys:', err);
 			return { status: 500, keyValues: [] };
 		});
-}
+};
 
-export async function getValue(bucket: string, key: string): Promise<ValueResponse> {
+export const getValue = async (bucket: string, key: string): Promise<ValueResponse> => {
 	return await fetch(`${API}/api/bucket/${bucket}/key/${key}`)
 		.then((res) => res.json())
 		.catch((err) => {
 			console.error('Error fetching value:', err);
 			return { status: 500, value: null };
 		});
-}
+};
+
+export const updateValue = async (
+	bucket: string,
+	key: string,
+	value: string,
+	originalKey: string
+): Promise<FetchResponse> => {
+	return await fetch(`${API}/api/bucket/${bucket}/key/${key}`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ value, originalKey })
+	})
+		.then((res) => res.json())
+		.catch((err) => {
+			console.error('Error updating value:', err);
+			return { status: 500, value: null };
+		});
+};
+
+export const addValue = async (
+	bucket: string,
+	key: string,
+	value: string
+): Promise<FetchResponse> => {
+	return await fetch(`${API}/api/bucket/${bucket}/key/${key}`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ value })
+	})
+		.then(async (res) => {
+			const data = await res.json();
+			return { status: res.status, message: data.message || 'Value added successfully' };
+		})
+		.catch((err) => {
+			console.error('Error updating value:', err);
+			return { status: 500, error: err.message || 'Internal server error' };
+		});
+};
+
+export const deleteKey = async (bucket: string, key: string): Promise<FetchResponse> => {
+	return await fetch(`${API}/api/bucket/${bucket}/key/${key}`, {
+		method: 'DELETE'
+	})
+		.then(async (res) => {
+			const data = await res.json();
+			if (res.ok) {
+				return { status: res.status, message: data.message || 'Key deleted successfully' };
+			} else {
+				return { status: res.status, error: data.message || 'Failed to delete key' };
+			}
+		})
+		.catch((err) => {
+			console.error('Error deleting key:', err);
+			return { status: 500, error: 'Internal server error' };
+		});
+};

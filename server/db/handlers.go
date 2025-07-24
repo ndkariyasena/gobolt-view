@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -110,4 +111,85 @@ func GetValueHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"value": string(value)})
+}
+
+func AddValueHandler(c *gin.Context) {
+	bucket := c.Param("name")
+	key := c.Param("key")
+
+	var req struct {
+		Value string `json:"value"`
+	}
+
+	if err := c.BindJSON(&req); err != nil {
+		fmt.Println("Error binding JSON:", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		return
+	}
+
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(bucket))
+		if b == nil {
+			return nil
+		}
+		return b.Put([]byte(key), []byte(req.Value))
+	})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Value updated"})
+}
+
+func UpdateKeyHandler(c *gin.Context) {
+	bucket := c.Param("name")
+	key := c.Param("key")
+
+	var req struct {
+		Value       string `json:"value"`
+		OriginalKey string `json:"originalKey"`
+	}
+
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		return
+	}
+
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(bucket))
+		if b == nil {
+			return nil
+		}
+		b.Delete([]byte(req.OriginalKey))
+		return b.Put([]byte(key), []byte(req.Value))
+	})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Key updated"})
+}
+
+func DeleteKeyHandler(c *gin.Context) {
+	bucket := c.Param("name")
+	key := c.Param("key")
+
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(bucket))
+		if b == nil {
+			return nil
+		}
+		return b.Delete([]byte(key))
+	})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Key deleted"})
 }

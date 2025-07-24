@@ -30,7 +30,8 @@ export interface ConnectionParams {
   dbFilePath: string;
 }
 
-export interface FetchError {
+export interface FetchResponse {
   status: number;
-  message: string;
+  message?: string;
+  error?: string;
 }
