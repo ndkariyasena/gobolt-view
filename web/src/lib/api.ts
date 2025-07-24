@@ -3,8 +3,8 @@ import type {
 	StartDbConnectionResponse,
 	BucketDetails,
 	KeyValuesResponse,
-  ValueResponse,
-  ConnectionParams,
+	ValueResponse,
+	ConnectionParams
 } from './types';
 
 const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -26,17 +26,21 @@ export const startDbConnection = async (
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
 	})
-		.then((res) => res.json())
-		.then((res) => {
-      return {
-        status: res.status,
-        message: res.message || null,
-        error: res.error || null
-      } as unknown as StartDbConnectionResponse;
-    })
+		.then(async (res) => {
+			const data = await res.json();
+			return {
+				status: res.status,
+				message: data.message || null,
+				error: data.error || null
+			} as StartDbConnectionResponse;
+		})
 		.catch((err) => {
 			console.error('Error starting DB connection:', err);
-			return { status: 400, message: null, error: 'Failed to start DB connection' } as StartDbConnectionResponse;
+			return {
+				status: 400,
+				message: null,
+				error: 'Failed to start DB connection'
+			} as StartDbConnectionResponse;
 		});
 };
 
